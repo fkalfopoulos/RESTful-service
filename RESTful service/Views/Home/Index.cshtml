@@ -1,31 +1,55 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿
+@model IEnumerable<RESTful_service.Models.Movie>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<h2>All Reservations</h2>
+
+
+
+<p>
+    @Html.ActionLink("AddMovie", "AddMovie", null, new { @class = "btn btn-sm btn-primary" })
+</p>
+
+<p>
+    @Html.ActionLink("GetMovie", "GetMovie", null, new { @class = "btn btn-sm btn-primary" })
+</p>
+
+<table class="table table-sm table-striped table-bordered m-2">
+
+
+
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+
+
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.MovieId</td>
+                <td>@m.Name</td>
+                <td>@m.Title</td>
+                <td>@m.Description</td>
+
+
+
+                <td>
+                    
+                    @Html.ActionLink("Edit", "Edit", new { id = m.MovieId }, new { @class = "btn btn-success" })
+                    
+                   
+                    
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = m.MovieId }, new { onclick = $"return confirm('{m.Name} will be deleted. Are you sure ?');", @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
