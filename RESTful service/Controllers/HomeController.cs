@@ -116,6 +116,35 @@ namespace RESTful_service.Controllers
             return View(movie);
 
         }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Edit(Movie item)
+        {
+            //HttpClient client = new HttpClient();
+            //client.BaseAddress = new Uri("http://localhost:56337/api/UsersApi");
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //HttpResponseMessage response = client.PutAsJsonAsync("UsersApi", user).Result;
+            //return RedirectToAction("Index");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:61462/api/Movies");
+
+                //HTTP POST
+                var putTask = client.PutAsJsonAsync<Movie>("Movies", item);
+                putTask.Wait();
+
+                var result = putTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact with administrator.");
+            return View(item);
+        }
+
         public ActionResult Delete(int id)
         {
             using (var client = new HttpClient())
